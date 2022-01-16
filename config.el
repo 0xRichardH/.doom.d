@@ -22,7 +22,17 @@
 ;;(setq doom-font (font-spec :family "monospace" :size 12 :weight 'semi-light)
 ;;      doom-variable-pitch-font (font-spec :family "sans" :size 13))
 
-(setq doom-font (font-spec :family "JetBrains Mono NL" :size 16 :weight 'semi-light))
+;; FiraCode Nerd Font https://github.com/tonsky/FiraCode
+;;      ```
+;;      brew tap homebrew/cask-fonts
+;;      brew install --cask font-fira-code-nerd-font
+;;      ```
+;; ET Book https://edwardtufte.github.io/et-book/
+;;      ```
+;;      brew install --cask font-et-book
+;;      '''
+(setq doom-font (font-spec :family "FiraCode Nerd Font" :size 16)
+      doom-variable-pitch-font (font-spec :family "ETBembo" :size 16))
 
 ;; There are two ways to load a theme. Both assume the theme is installed and
 ;; available. You can either set `doom-theme' or manually load a theme with the
