@@ -56,3 +56,10 @@
 ;; they are implemented.
 
 (setq projectile-project-search-path '("~/workspace/"))
+
+;;doom banners
+(let ((alternatives '("I-am-doom.png"
+                      "lion-head.png")))
+  (setq fancy-splash-image
+        (concat doom-private-dir "banners/"
+                (nth (random (length alternatives)) alternatives))))
