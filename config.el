@@ -65,11 +65,19 @@
 ;; You can also try 'gd' (or 'C-c c d') to jump to their definition and see how
 ;; they are implemented.
 
+;; set up projectile search path
 (setq projectile-project-search-path '("~/workspace/"))
 
-;;doom banners
+;; doom banners
 (let ((alternatives '("I-am-doom.png"
                       "lion-head.png")))
   (setq fancy-splash-image
         (concat doom-private-dir "banners/"
                 (nth (random (length alternatives)) alternatives))))
+
+;; evil -> Restoring old substitution behavior on s/S
+;; https://github.com/hlissner/doom-emacs/tree/master/modules/editor/evil#restoring-old-substitution-behavior-on-ss
+(remove-hook 'doom-first-input-hook #'evil-snipe-mode)
+;; evil -> Disabling cursor movement when exiting insert mode
+;; Disabling cursor movement when exiting insert mode
+(setq evil-move-cursor-back nil)
