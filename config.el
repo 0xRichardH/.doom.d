@@ -81,3 +81,5 @@
 ;; evil -> Disabling cursor movement when exiting insert mode
 ;; Disabling cursor movement when exiting insert mode
 (setq evil-move-cursor-back nil)
+
+(setq emacs-everywhere-major-mode-function #'org-mode)
