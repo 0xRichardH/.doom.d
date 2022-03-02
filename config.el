@@ -83,3 +83,5 @@
 (setq evil-move-cursor-back nil)
 
 (setq emacs-everywhere-major-mode-function #'org-mode)
+
+(beacon-mode 1)

@@ -48,3 +48,7 @@
 ;(unpin! pinned-package another-pinned-package)
 ;; ...Or *all* packages (NOT RECOMMENDED; will likely break things)
 ;(unpin! t)
+
+;; A light that follows your cursor around so you don't lose it!
+;; https://github.com/Malabarba/beacon
+(package! beacon)
