@@ -85,3 +85,8 @@
 (setq emacs-everywhere-major-mode-function #'org-mode)
 
 (beacon-mode 1)
+
+;; Disable format for specific languages
+;; https://github.com/lassik/emacs-format-all-the-code
+;; https://github.com/hlissner/doom-emacs/tree/master/modules/editor/format
+(setq-hook! 'ruby-mode-hook +format-with :none)
