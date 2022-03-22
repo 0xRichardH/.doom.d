@@ -52,3 +52,8 @@
 ;; A light that follows your cursor around so you don't lose it!
 ;; https://github.com/Malabarba/beacon
 (package! beacon)
+
+;; A presentation tool for org-mode based on the visibility of outline trees
+;; https://github.com/daviwil/emacs-from-scratch/blob/master/show-notes/Emacs-Tips-04.org
+(package! org-tree-slide)
+(package! hide-mode-line)

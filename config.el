@@ -84,9 +84,34 @@
 
 (setq emacs-everywhere-major-mode-function #'org-mode)
 
+;; beacon
 (beacon-mode 1)
 
 ;; Disable format for specific languages
 ;; https://github.com/lassik/emacs-format-all-the-code
 ;; https://github.com/hlissner/doom-emacs/tree/master/modules/editor/format
 (setq-hook! 'ruby-mode-hook +format-with :none)
+
+
+;;; org-tree-slide
+(defun efs/presentation-setup ()
+  ;; Hide the mode line
+  (hide-mode-line-mode 1)
+
+  ;; Display images inline
+  (org-display-inline-images) ;; Can also use org-startup-with-inline-images
+
+  ;; Scale the text.  The next line is for basic scaling:
+  (setq text-scale-mode-amount 3)
+  (text-scale-mode 1))
+
+(defun efs/presentation-end ()
+  ;; Show the mode line again
+  (hide-mode-line-mode 0)
+
+  ;; Turn off text scale mode (or use the next line if you didn't use text-scale-mode)
+  (text-scale-mode 0))
+
+(use-package org-tree-slide
+  :hook ((org-tree-slide-play . efs/presentation-setup)
+         (org-tree-slide-stop . efs/presentation-end)))
