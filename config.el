@@ -84,6 +84,8 @@
 
 (setq emacs-everywhere-major-mode-function #'org-mode)
 
+(setq org-hide-emphasis-markers t)
+
 ;; beacon
 (beacon-mode 1)
 
@@ -115,3 +117,24 @@
 (use-package org-tree-slide
   :hook ((org-tree-slide-play . efs/presentation-setup)
          (org-tree-slide-stop . efs/presentation-end)))
+
+;; org-bullets
+(use-package org-bullets
+  :config
+  (add-hook 'org-mode-hook (lambda () (org-bullets-mode 1))))
+
+;; Org mode
+(add-hook 'org-mode-hook
+        '(lambda ()
+        ;; Hide org block lines
+
+        ;; Unset any previous customization for the background color
+        (set-face-attribute 'org-block-begin-line nil :background 'unspecified)
+        (set-face-attribute 'org-block-end-line nil :background 'unspecified)
+
+        ;; Set the foreground color to the value of the background color
+        (set-face-attribute 'org-block-begin-line nil
+        :foreground (face-background 'org-block-begin-line nil 'default))
+        (set-face-attribute 'org-block-end-line nil
+        :foreground (face-background 'org-block-end-line nil 'default))
+        ))

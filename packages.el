@@ -57,3 +57,4 @@
 ;; https://github.com/daviwil/emacs-from-scratch/blob/master/show-notes/Emacs-Tips-04.org
 (package! org-tree-slide)
 (package! hide-mode-line)
+(package! org-bullets)
