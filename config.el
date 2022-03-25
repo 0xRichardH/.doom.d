@@ -50,6 +50,9 @@
 ;; Prevents some cases of Emacs flickering.
 (add-to-list 'default-frame-alist '(inhibit-double-buffering . t))
 
+;; maximize/fullscreen Emacs on startup
+(add-to-list 'initial-frame-alist '(fullscreen . maximized))
+
 ;;; :ui modeline
 ;; An evil mode indicator is redundant with cursor shape
 (advice-add #'doom-modeline-segment--modals :override #'ignore)
@@ -86,8 +89,11 @@
 (setq projectile-project-search-path '("~/workspace/"))
 
 ;; doom banners
-(let ((alternatives '("I-am-doom.png"
-                      "lion-head.png")))
+(let ((alternatives '("splash.png"
+                      "lion-head.png"
+                      "pilot-bust-go.svg"
+                      "rails.png"
+                      "ruby.png")))
   (setq fancy-splash-image
         (concat doom-private-dir "banners/"
                 (nth (random (length alternatives)) alternatives))))
@@ -127,6 +133,26 @@
 ;; org-mode
 (setq org-hide-emphasis-markers t)
 
+;; Org mode
+(add-hook 'org-mode-hook
+        '(lambda ()
+        ;; org-bullets
+        (org-bullets-mode 1)
+
+        ;;; Hide org block lines
+
+        ;; Unset any previous customization for the background color
+        (set-face-attribute 'org-block-begin-line nil :background 'unspecified)
+        (set-face-attribute 'org-block-end-line nil :background 'unspecified)
+
+        ;; Set the foreground color to the value of the background color
+        (set-face-attribute 'org-block-begin-line nil
+        :foreground (face-background 'org-block-begin-line nil 'default))
+        (set-face-attribute 'org-block-end-line nil
+        :foreground (face-background 'org-block-end-line nil 'default))
+        ))
+
+;;
 ;;; org-tree-slide
 (defun efs/presentation-setup ()
   ;; Hide the mode line
@@ -149,22 +175,3 @@
 (use-package org-tree-slide
   :hook ((org-tree-slide-play . efs/presentation-setup)
          (org-tree-slide-stop . efs/presentation-end)))
-
-;; Org mode
-(add-hook 'org-mode-hook
-        '(lambda ()
-        ;; org-bullets
-        (org-bullets-mode 1)
-
-        ;;; Hide org block lines
-
-        ;; Unset any previous customization for the background color
-        (set-face-attribute 'org-block-begin-line nil :background 'unspecified)
-        (set-face-attribute 'org-block-end-line nil :background 'unspecified)
-
-        ;; Set the foreground color to the value of the background color
-        (set-face-attribute 'org-block-begin-line nil
-        :foreground (face-background 'org-block-begin-line nil 'default))
-        (set-face-attribute 'org-block-end-line nil
-        :foreground (face-background 'org-block-end-line nil 'default))
-        ))
