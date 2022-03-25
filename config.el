@@ -118,15 +118,13 @@
   :hook ((org-tree-slide-play . efs/presentation-setup)
          (org-tree-slide-stop . efs/presentation-end)))
 
-;; org-bullets
-(use-package org-bullets
-  :config
-  (add-hook 'org-mode-hook (lambda () (org-bullets-mode 1))))
-
 ;; Org mode
 (add-hook 'org-mode-hook
         '(lambda ()
-        ;; Hide org block lines
+        ;; org-bullets
+        (org-bullets-mode 1)
+
+        ;;; Hide org block lines
 
         ;; Unset any previous customization for the background color
         (set-face-attribute 'org-block-begin-line nil :background 'unspecified)
