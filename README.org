@@ -1,0 +1,16 @@
+* .doom.d
+
+https://github.com/hlissner/doom-emacs
+
+#+begin_src shell
+brew install emacs-plus --with-gnu-head-icon
+
+# daemon (optional)
+brew services restart emacs-plus
+brew services info emacs-plus
+#+end_src
+
+#+begin_src shell
+# (lookup +dictionary +docsets +offline)
+brew install ripgrep wordnet
+#+end_src
