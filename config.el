@@ -91,7 +91,7 @@
 ;; doom banners
 (let ((alternatives '("splash.png"
                       "lion-head.png"
-                      "pilot-bust-go.svg"
+                      "gopher.png"
                       "rails.png"
                       "ruby.png")))
   (setq fancy-splash-image
