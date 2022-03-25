@@ -47,6 +47,23 @@
 ;; numbers are disabled. For relative line numbers, set this to `relative'.
 (setq display-line-numbers-type 'relative)
 
+;; Prevents some cases of Emacs flickering.
+(add-to-list 'default-frame-alist '(inhibit-double-buffering . t))
+
+;;; :ui modeline
+;; An evil mode indicator is redundant with cursor shape
+(advice-add #'doom-modeline-segment--modals :override #'ignore)
+
+;;; :editor evil
+;; Focus new window after splitting
+(setq evil-split-window-below t
+      evil-vsplit-window-right t)
+;; evil -> Restoring old substitution behavior on s/S
+;; https://github.com/hlissner/doom-emacs/tree/master/modules/editor/evil#restoring-old-substitution-behavior-on-ss
+(remove-hook 'doom-first-input-hook #'evil-snipe-mode)
+;; evil -> Disabling cursor movement when exiting insert mode
+;; Disabling cursor movement when exiting insert mode
+(setq evil-move-cursor-back nil)
 
 ;; Here are some additional functions/macros that could help you configure Doom:
 ;;
@@ -74,26 +91,41 @@
   (setq fancy-splash-image
         (concat doom-private-dir "banners/"
                 (nth (random (length alternatives)) alternatives))))
-
-;; evil -> Restoring old substitution behavior on s/S
-;; https://github.com/hlissner/doom-emacs/tree/master/modules/editor/evil#restoring-old-substitution-behavior-on-ss
-(remove-hook 'doom-first-input-hook #'evil-snipe-mode)
-;; evil -> Disabling cursor movement when exiting insert mode
-;; Disabling cursor movement when exiting insert mode
-(setq evil-move-cursor-back nil)
-
-(setq emacs-everywhere-major-mode-function #'org-mode)
-
-(setq org-hide-emphasis-markers t)
+;; Hide the menu for as minimalistic a startup screen as possible.
+;; (remove-hook '+doom-dashboard-functions #'doom-dashboard-widget-shortmenu)
 
 ;; beacon
 (beacon-mode 1)
+
+;;; :app everywhere
+(setq emacs-everywhere-major-mode-function #'org-mode)
+(after! emacs-everywhere
+  ;; Easier to match with a bspwm rule:
+  ;;   bspc rule -a 'Emacs:emacs-everywhere' state=floating sticky=on
+  (setq emacs-everywhere-frame-name-format "emacs-anywhere")
+
+  ;; The modeline is not useful to me in the popup window. It looks much nicer
+  ;; to hide it.
+  (remove-hook 'emacs-everywhere-init-hooks #'hide-mode-line-mode)
+
+  ;; Semi-center it over the target window, rather than at the cursor position
+  ;; (which could be anywhere).
+  (defadvice! center-emacs-everywhere-in-origin-window (frame window-info)
+    :override #'emacs-everywhere-set-frame-position
+    (cl-destructuring-bind (x y width height)
+        (emacs-everywhere-window-geometry window-info)
+      (set-frame-position frame
+                          (+ x (/ width 2) (- (/ width 2)))
+                          (+ y (/ height 2))))))
 
 ;; Disable format for specific languages
 ;; https://github.com/lassik/emacs-format-all-the-code
 ;; https://github.com/hlissner/doom-emacs/tree/master/modules/editor/format
 (setq-hook! 'ruby-mode-hook +format-with :none)
 
+
+;; org-mode
+(setq org-hide-emphasis-markers t)
 
 ;;; org-tree-slide
 (defun efs/presentation-setup ()
