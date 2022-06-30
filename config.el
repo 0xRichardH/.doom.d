@@ -139,11 +139,28 @@
                           (+ x (/ width 2) (- (/ width 2)))
                           (+ y (/ height 2))))))
 
-;; Disable format for specific languages
+;; Enable format for specific languages
 ;; https://github.com/lassik/emacs-format-all-the-code
 ;; https://github.com/hlissner/doom-emacs/tree/master/modules/editor/format
-(setq-hook! 'ruby-mode-hook +format-with :none)
+(setq +format-on-save-enabled-modes
+      '(go-mode))
 
+;; accept completion from copilot and fallback to company
+(defun my-tab ()
+  (interactive)
+  (or (copilot-accept-completion)
+      (company-indent-or-complete-common nil)))
+
+(use-package! copilot
+  :hook (prog-mode . copilot-mode)
+  :bind (("C-TAB" . 'copilot-accept-completion-by-word)
+         ("C-<tab>" . 'copilot-accept-completion-by-word)
+         :map company-active-map
+         ("<tab>" . 'my-tab)
+         ("TAB" . 'my-tab)
+         :map company-mode-map
+         ("<tab>" . 'my-tab)
+         ("TAB" . 'my-tab)))
 
 ;; org-mode
 (setq org-hide-emphasis-markers t)
@@ -190,3 +207,12 @@
 (use-package org-tree-slide
   :hook ((org-tree-slide-play . efs/presentation-setup)
          (org-tree-slide-stop . efs/presentation-end)))
+
+;;
+;; ob-mermaid
+(setq ob-mermaid-cli-path "~/workspace/node_modules/.bin/mmdc")
+(org-babel-do-load-languages
+    'org-babel-load-languages
+    '((mermaid . t)
+      (scheme . t)
+      (your-other-langs . t)))

@@ -58,3 +58,12 @@
 (package! org-tree-slide)
 (package! hide-mode-line)
 (package! org-bullets)
+
+;; https://github.com/zerolfx/copilot.el
+;; M-x copilot-diagnose
+;; M-x copilot-login
+(package! copilot
+  :recipe (:host github :repo "zerolfx/copilot.el" :files ("*.el" "dist")))
+
+;; https://github.com/arnm/ob-mermaid
+(package! ob-mermaid :recipe (:host github :repo "arnm/ob-mermaid" :files ("*.el")))
